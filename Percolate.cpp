@@ -1,6 +1,9 @@
 #include "Percolaton.h"
 #include "WeightedQuickUnionUF.h"
+#include "gen_uf.h"
+
 #include <vector>
+#include <iostream>
 
 Percolation::Percolation(int n): 
     WeightedQuickUnionUF(n)
@@ -63,6 +66,11 @@ bool Percolation::percolates(){
 
 void Percolation::testPercolateThreshold(){
     while (!this->percolates()){
-        break;
+        int row = rand_uf(0, sz_grid - 1);
+        int col = rand_uf(0, sz_grid - 1); 
+        if (! this -> isOpen(row, col)){
+            this -> open(row, col);
+        }
     }
+    std::cout << double(numberOfOpenSites_) / (sz_grid * sz_grid) << std::endl;
 }

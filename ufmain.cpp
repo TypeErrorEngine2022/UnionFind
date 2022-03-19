@@ -2,6 +2,7 @@
 #include <fstream>
 #include "Quickfind.h"
 #include "WeightedQuickUnionUF.h"
+#include "Percolaton.h"
 #include "gen_uf.h"
 
 using namespace std;
@@ -41,7 +42,8 @@ int main(){
         infile.close();
     }*/
 
-
+    Percolation pGrid(size);
+    pGrid.testPercolateThreshold();
 
 }
 

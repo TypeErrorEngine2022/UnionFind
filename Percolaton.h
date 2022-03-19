@@ -1,6 +1,8 @@
 #include <vector>
-#include "WeightedQuickUnionUF.h"
+#include <iostream>
 
+#include "WeightedQuickUnionUF.h"
+#include "gen_uf.h"
 
 class Percolation: public WeightedQuickUnionUF{
 private:

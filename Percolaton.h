@@ -3,7 +3,10 @@
 class Percolation{
 private:
     // 0 -> open site, 1 -> closed site
-    std::vector<std::vector<int>> grid; //outer:rows, inner: cols
+    std::vector<int> grid; //n^2 site
+    const int sz_grid; //size of grid, 5-by-5 grid has size 5
+    const int open = 1;
+    const int closed = 0;
 
 public:
     Percolation(int n); //create n-by-n grid, with all sites initially closed

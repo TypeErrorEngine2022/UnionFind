@@ -12,7 +12,7 @@ WeightedQuickUnionUF::WeightedQuickUnionUF(int n){
     }  
 }
 
-int WeightedQuickUnionUF::count(){
+int WeightedQuickUnionUF::count()const{
     return count_;
 }
 

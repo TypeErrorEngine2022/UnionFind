@@ -2,21 +2,22 @@
 #include "WeightedQuickUnionUF.h"
 #include <vector>
 
-Percolation::Percolation(int n){
+Percolation::Percolation(int n): 
+    WeightedQuickUnionUF(n)
+{
     sz_grid = n;
     numberOfOpenSites_ = 0;
     grid.reserve(n * n);
     for (int i = 0; i < n * n; i++){ //n^2 complexity
         grid.push_back(closed); //initially all sites are closed
     }
-
-    WeightedQuickUnionUF uf(n * n + 2); 
     const int top = n * n; //top virtual site for
     const int bottom = n * n + 1; //bottom virtual site
     int bot_tmp_ix = n * (n - 1) + 1 - 1; //bottom edge starts from [n][1]
+
     for (int i = 0; i < n; i++){
-        uf.WeightedUnion(i, top); //connect top edge and top
-        uf.WeightedUnion(bot_tmp_ix, bottom); //connect bottom edge and bottom
+        this -> WeightedUnion(i, top); //connect top edge and top
+        this -> WeightedUnion(bot_tmp_ix, bottom); //connect bottom edge and bottom
         bot_tmp_ix++;
     }
 } 
@@ -30,16 +31,16 @@ void Percolation::open(int row, int col){
 
     //connect to up, left, right, down sites if they are opened
     int up_ix = sz_grid * ((row - 1) - 1) + col - 1; 
-    if (grid[up_ix] == m_open) uf.WeightedUnion(ix, up_ix);
+    if (grid[up_ix] == m_open) this -> WeightedUnion(ix, up_ix);
 
     int left_ix = sz_grid * (row - 1) + (col - 1) - 1;
-    if (grid[left_ix] == m_open) uf.WeightedUnion(ix, left_ix);
+    if (grid[left_ix] == m_open) this -> WeightedUnion(ix, left_ix);
 
     int right_ix = sz_grid * (row - 1) + (col + 1) - 1;
-    if (grid[left_ix] == m_open) uf.WeightedUnion(ix, right_ix);
+    if (grid[left_ix] == m_open) this -> WeightedUnion(ix, right_ix);
 
     int down_ix = sz_grid * ((row + 1) - 1) + col - 1;
-    if (grid[left_ix] == m_open) uf.WeightedUnion(ix, down_ix);
+    if (grid[left_ix] == m_open) this -> WeightedUnion(ix, down_ix);
 }
 
 bool Percolation::isOpen(int row, int col)const{
@@ -47,21 +48,21 @@ bool Percolation::isOpen(int row, int col)const{
     return (grid[ix] == m_open)? true:false;
 }
 
-bool Percolation::isFull(int row, int col)const{
+bool Percolation::isFull(int row, int col){
     int ix = sz_grid * (row - 1) + col - 1;
-    return uf.connected(ix, top);
+    return this -> connected(ix, top);
 }
 
 int Percolation::numberOfOpenSites()const{
     return numberOfOpenSites_;
 }
 
-bool Percolation::percolates()const{
-    return uf.connected(top, bottom);
+bool Percolation::percolates(){
+    return this -> connected(top, bottom);
 }
 
 void Percolation::testPercolateThreshold(){
     while (!this->percolates()){
-        
+        break;
     }
 }

@@ -10,7 +10,7 @@ private:
     
 public:
     WeightedQuickUnionUF(int n);
-    int count(); //return no of component
+    int count()const; //return no of component
     bool connected(int p, int q); //check if their components' are equal
     void WeightedUnion(int p, int q); //merge trees tgt, smaller tree becomes child of larger tree
 

@@ -4,7 +4,7 @@
 #include "WeightedQuickUnionUF.h"
 #include "gen_uf.h"
 
-class Percolation: public WeightedQuickUnionUF{
+class Percolation: private WeightedQuickUnionUF{
 private:
      //n^2 site
     std::vector<int> grid;

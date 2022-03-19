@@ -25,11 +25,11 @@ int main(){
         //Test for QFunion
         UF uf(size);
         while (infile >> p >> q){ 
-            if (uf.connected(p, q)) continue;
+            if (uf.QFconnected(p, q)) continue;
             uf.QFunion(p, q);
             //cout << p << " " << q << endl;
         }
-        cout << uf.count() << " components";
+        cout << uf.QFcount() << " components";
 
         //Test for WeightedQuickUnion
         WeightedQuickUnionUF wuf(size);

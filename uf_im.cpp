@@ -8,11 +8,11 @@ UF::UF(int n){
     }
 }
 
-int UF::count(){
+int UF::QFcount(){
     return count_;
 }
 
-bool UF::connected(int p, int q){
+bool UF::QFconnected(int p, int q){
     return id[p] == id[q];
 }
 

@@ -10,7 +10,7 @@ private:
     int find(int p); //find p's component
 public:
     UF(int n);
-    int count(); //return no of component
-    bool connected(int p, int q); //check if their components' are equal
+    int QFcount(); //return no of component
+    bool QFconnected(int p, int q); //check if their components' are equal
     void QFunion(int p, int q); //merge component
 };

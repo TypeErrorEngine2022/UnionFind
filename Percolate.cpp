@@ -6,7 +6,7 @@
 #include <iostream>
 
 Percolation::Percolation(int n): 
-    WeightedQuickUnionUF(n)
+    WeightedQuickUnionUF(n * n)
 {
     sz_grid = n;
     numberOfOpenSites_ = 0;
@@ -14,15 +14,21 @@ Percolation::Percolation(int n):
     for (int i = 0; i < n * n; i++){ //n^2 complexity
         grid.push_back(closed); //initially all sites are closed
     }
-    const int top = n * n; //top virtual site for
-    const int bottom = n * n + 1; //bottom virtual site
-    int bot_tmp_ix = n * (n - 1) + 1 - 1; //bottom edge starts from [n][1]
 
+    top = n * n; //top virtual site
+    bottom = n * n + 1; //bottom virtual site
+
+    int bot_tmp_ix = n * (n - 1) + 1 - 1; //bottom edge starts from [n][1]
+    std::cout << "Construting...count is " << this->count() << std::endl;
+    std::cout << this->percolates() << std::endl;
+    
     for (int i = 0; i < n; i++){
+        std::cout << "first connect" << std::endl;
         this -> WeightedUnion(i, top); //connect top edge and top
         this -> WeightedUnion(bot_tmp_ix, bottom); //connect bottom edge and bottom
         bot_tmp_ix++;
     }
+    std::cout << this->percolates() << std::endl;
 } 
 
 void Percolation::open(int row, int col){
@@ -40,10 +46,10 @@ void Percolation::open(int row, int col){
     if (grid[left_ix] == m_open) this -> WeightedUnion(ix, left_ix);
 
     int right_ix = sz_grid * (row - 1) + (col + 1) - 1;
-    if (grid[left_ix] == m_open) this -> WeightedUnion(ix, right_ix);
+    if (grid[right_ix] == m_open) this -> WeightedUnion(ix, right_ix);
 
     int down_ix = sz_grid * ((row + 1) - 1) + col - 1;
-    if (grid[left_ix] == m_open) this -> WeightedUnion(ix, down_ix);
+    if (grid[down_ix] == m_open) this -> WeightedUnion(ix, down_ix);
 }
 
 bool Percolation::isOpen(int row, int col)const{
@@ -53,7 +59,7 @@ bool Percolation::isOpen(int row, int col)const{
 
 bool Percolation::isFull(int row, int col){
     int ix = sz_grid * (row - 1) + col - 1;
-    return this -> connected(ix, top);
+    return connected(ix, top);
 }
 
 int Percolation::numberOfOpenSites()const{
@@ -61,16 +67,21 @@ int Percolation::numberOfOpenSites()const{
 }
 
 bool Percolation::percolates(){
-    return this -> connected(top, bottom);
+    std::cout << "top is " << top << std::endl;
+    return this->connected(top, bottom);
 }
 
 void Percolation::testPercolateThreshold(){
-    while (!this->percolates()){
+    std::cout << "enter function\n";
+    std::cout << "count is " << this->count() << std::endl;
+    while (!(this->percolates())){
         int row = rand_uf(0, sz_grid - 1);
         int col = rand_uf(0, sz_grid - 1); 
-        if (! this -> isOpen(row, col)){
+        std::cout << "enter loop\n";
+        if (!(this -> isOpen(row, col))){
+            std::cout << "added 1\n";
             this -> open(row, col);
         }
     }
-    std::cout << double(numberOfOpenSites_) / (sz_grid * sz_grid) << std::endl;
+    std::cout << numberOfOpenSites_ << std::endl;
 }

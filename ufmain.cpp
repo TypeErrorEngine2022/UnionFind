@@ -44,6 +44,5 @@ int main(){
 
     Percolation pGrid(size);
     pGrid.testPercolateThreshold();
-
 }
 

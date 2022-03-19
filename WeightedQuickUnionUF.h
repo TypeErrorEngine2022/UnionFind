@@ -4,7 +4,7 @@
 
 class WeightedQuickUnionUF{
 private:
-    std::vector<int> id; //parent link(site indexed)
+    std::vector<int> parent; //parent link(site indexed)
     std::vector<int> sz; //size of component for roots(site indexed) / no of element in tree
     int count_; //number of components/tree
     

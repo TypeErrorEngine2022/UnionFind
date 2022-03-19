@@ -2,9 +2,9 @@
 
 WeightedQuickUnionUF::WeightedQuickUnionUF(int n){
     count_ = n;
-    id.reserve(n);
+    parent.reserve(n);
     for (int i = 0; i < n; i++){
-        id.push_back(i);
+        parent.push_back(i);
     }
     sz.reserve(n);
     for (int i = 0; i < n; i++){
@@ -17,9 +17,9 @@ int WeightedQuickUnionUF::count()const{
 }
 
 int WeightedQuickUnionUF::root(int p){
-    while (p != id[p]){ //chase parent pointer until it reaches root => parent = parent's root => parent = root
-        id[p] = id[id[p]]; //change root of p to its grandparent: path-compression
-        p = id[p]; //go to parent
+    while (p != parent[p]){ //chase parent pointer until it reaches root => parent = parent's root => parent = root
+        parent[p] = parent[parent[p]]; //change root of p to its grandparent: path-compression
+        p = parent[p]; //go to grandparent
     }
     return p;
 }
@@ -29,11 +29,17 @@ bool WeightedQuickUnionUF::connected(int p, int q){
 }
 
 void WeightedQuickUnionUF::WeightedUnion(int p, int q){
-    int i = this->root(p);
-    int j = this->root(q);
+    int rootP = this->root(p);
+    int rootQ = this->root(q);
 
-    if (i == j) return;
-    if (sz[i] < sz[j]) {id[i] = j; sz[j] += sz[i]; }
-    else {id[j] = i; sz[i] += sz[j]; }
+    if (rootP == rootQ) return;
+    if (sz[rootP] < sz[rootQ]){
+        parent[rootP] = rootQ;
+        sz[rootQ] += sz[rootP]; 
+    }
+    else {
+        parent[rootQ] = rootP; 
+        sz[rootP] += sz[rootQ]; 
+    }
     --count_;
 }

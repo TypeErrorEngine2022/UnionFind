@@ -25,26 +25,26 @@ void Percolation::open(int row, int col){
     //row:2 col:1 for size:5 = 5th element 
     // = size(row - 1) + col - 1 = 5(2-1) + 1 - 1
     int ix = sz_grid * (row - 1) + col - 1;
-    if (grid[ix] != open) grid[ix] = open;
+    if (grid[ix] != m_open) grid[ix] = m_open;
     ++numberOfOpenSites_;
 
     //connect to up, left, right, down sites if they are opened
     int up_ix = sz_grid * ((row - 1) - 1) + col - 1; 
-    if (grid[up_ix] == open) uf.WeightedUnion(ix, up_ix);
+    if (grid[up_ix] == m_open) uf.WeightedUnion(ix, up_ix);
 
     int left_ix = sz_grid * (row - 1) + (col - 1) - 1;
-    if (grid[left_ix] == open) uf.WeightedUnion(ix, left_ix);
+    if (grid[left_ix] == m_open) uf.WeightedUnion(ix, left_ix);
 
     int right_ix = sz_grid * (row - 1) + (col + 1) - 1;
-    if (grid[left_ix] == open) uf.WeightedUnion(ix, right_ix);
+    if (grid[left_ix] == m_open) uf.WeightedUnion(ix, right_ix);
 
     int down_ix = sz_grid * ((row + 1) - 1) + col - 1;
-    if (grid[left_ix] == open) uf.WeightedUnion(ix, down_ix);
+    if (grid[left_ix] == m_open) uf.WeightedUnion(ix, down_ix);
 }
 
 bool Percolation::isOpen(int row, int col)const{
     int ix = sz_grid * (row - 1) + col - 1;
-    return (grid[ix] == open)? true:false;
+    return (grid[ix] == m_open)? true:false;
 }
 
 bool Percolation::isFull(int row, int col)const{

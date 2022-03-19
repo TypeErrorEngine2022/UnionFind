@@ -9,7 +9,7 @@ private:
     //size of grid, 5-by-5 grid has size 5
     const int sz_grid; 
 
-    const int open = 1;
+    const int m_open = 1;
 
     const int closed = 0;
 

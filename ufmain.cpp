@@ -30,7 +30,7 @@ int main(){
         cout << uf.count() << " components";*/
 
         //Test for WeightedQuickUnion
-        WeightedQuickUnionUF<total> wuf();
+        WeightedQuickUnionUF wuf(total);
         while (infile >> p >> q){
             if (wuf.connected(p ,q)) continue;
             wuf.WeightedUnion(p, q);

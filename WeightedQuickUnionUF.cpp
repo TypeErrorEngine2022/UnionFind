@@ -4,11 +4,11 @@ WeightedQuickUnionUF::WeightedQuickUnionUF(int n){
     count_ = n;
     id.reserve(n);
     for (int i = 0; i < n; i++){
-        id.push_back(n);
+        id.push_back(i);
     }
     sz.reserve(n);
     for (int i = 0; i < n; i++){
-        sz.push_back(n);
+        sz.push_back(i);
     }  
 }
 

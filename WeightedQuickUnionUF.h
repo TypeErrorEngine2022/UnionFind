@@ -2,7 +2,6 @@
 
 #include <vector>
 
-template<int N>
 class WeightedQuickUnionUF{
 private:
     std::vector<int> id; //parent link(site indexed)

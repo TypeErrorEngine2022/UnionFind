@@ -7,30 +7,31 @@
 using namespace std;
 
 int main(){
-    ofstream uftxt("largeuf.txt");
-    int total;
-    cout << "Enter the total number of elements:";
-    cin >> total;
-    write_uf(uftxt, total);
-    uftxt.close();
+    int size;
+    cout << "Enter the size(N) of percolation grid(N-by-N):";
+    cin >> size;
 
-    ifstream infile("largeuf.txt");
-    int tmp;
-    if (infile.is_open()){    
+    /*ofstream uftxt("largeuf.txt");
+    write_uf(uftxt, size);
+    uftxt.close();*/
+
+    /*ifstream infile("largeuf.txt");
+    int tmp;*/
+    /*if (infile.is_open()){    
         infile >> tmp; //just read the number for elements in txt
         int p, q;
         
         //Test for QFunion
-        /*UF uf(total);
+        UF uf(size);
         while (infile >> p >> q){ 
             if (uf.connected(p, q)) continue;
             uf.QFunion(p, q);
             //cout << p << " " << q << endl;
         }
-        cout << uf.count() << " components";*/
+        cout << uf.count() << " components";
 
         //Test for WeightedQuickUnion
-        WeightedQuickUnionUF wuf(total);
+        WeightedQuickUnionUF wuf(size);
         while (infile >> p >> q){
             if (wuf.connected(p ,q)) continue;
             wuf.WeightedUnion(p, q);
@@ -38,6 +39,11 @@ int main(){
         }
         cout << wuf.count() << " components";
         infile.close();
-    }
+    }*/
+
+    Percolation pGrid(size);
+    
+
+
 }
 

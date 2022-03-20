@@ -4,12 +4,12 @@
 class PercolationStat{
 private:
     double thresholdSum;
-    int size;
-    int trials;
+    std::size_t size;
+    std::size_t trials;
 
 public:
     //perform independent trials on a n-by-n grid
-    PercolationStat(int sz, int times);
+    PercolationStat(std::size_t sz, std::size_t times);
     
     //sample mean of percolation threshold
     double PercolationMean();

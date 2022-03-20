@@ -4,16 +4,22 @@
 
 class WeightedQuickUnionUF{
 private:
-    std::vector<int> parent; //parent link(site indexed)
-    std::vector<int> sz; //size of component for roots(site indexed) / no of element in tree
-    int count_; //number of components/tree
+    struct Node
+    {
+        std::size_t parent; //parent link(site indexed)
+        std::size_t size; //size of component for roots(site indexed) / no of element in tree
+    };
+
+    std::vector<Node> nodes;
+
+    std::size_t m_count; //number of components/tree
     
 public:
-    WeightedQuickUnionUF(int n);
-    int count()const; //return no of component
-    bool connected(int p, int q); //check if their components' are equal
-    void WeightedUnion(int p, int q); //merge trees tgt, smaller tree becomes child of larger tree
+    WeightedQuickUnionUF(std::size_t n);
+    std::size_t count()const; //return no of component
+    bool connected(std::size_t p, std::size_t q); //check if their components' are equal
+    void WeightedUnion(std::size_t p, std::size_t q); //merge trees tgt, smaller tree becomes child of larger tree
 
 private:
-    int root(int p); //return root of p
+    std::size_t root(std::size_t p); //return root of p
 };

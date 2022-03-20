@@ -1,45 +1,41 @@
 #include "WeightedQuickUnionUF.h"
 
-WeightedQuickUnionUF::WeightedQuickUnionUF(int n){
-    count_ = n;
-    parent.reserve(n);
-    for (int i = 0; i < n; i++){
-        parent.push_back(i);
+WeightedQuickUnionUF::WeightedQuickUnionUF(std::size_t n){
+    m_count = n;
+    nodes.reserve(n);
+    for (std::size_t i = 0; i < n; i++){
+        nodes.push_back({i, 1});
     }
-    sz.reserve(n);
-    for (int i = 0; i < n; i++){
-        sz.push_back(i);
-    }  
 }
 
-int WeightedQuickUnionUF::count()const{
-    return count_;
+std::size_t WeightedQuickUnionUF::count()const{
+    return m_count;
 }
 
-int WeightedQuickUnionUF::root(int p){
-    while (p != parent[p]){ //chase parent pointer until it reaches root => parent = parent's root => parent = root
-        parent[p] = parent[parent[p]]; //change root of p to its grandparent: path-compression
-        p = parent[p]; //go to grandparent
+std::size_t WeightedQuickUnionUF::root(std::size_t p){
+    while (p != nodes[p].parent){ //chase parent pointer until it reaches root => parent = parent's root => parent = root
+        nodes[p].parent = nodes[nodes[p].parent].parent; //change root of p to its grandparent: path-compression
+        p = nodes[p].parent; //go to grandparent
     }
     return p;
 }
 
-bool WeightedQuickUnionUF::connected(int p, int q){
+bool WeightedQuickUnionUF::connected(std::size_t p, std::size_t q){
     return root(p) == root(q);
 }
 
-void WeightedQuickUnionUF::WeightedUnion(int p, int q){
-    int rootP = root(p);
-    int rootQ = root(q);
+void WeightedQuickUnionUF::WeightedUnion(std::size_t p, std::size_t q){
+    std::size_t rootP = root(p);
+    std::size_t rootQ = root(q);
 
     if (rootP == rootQ) return;
-    if (sz[rootP] < sz[rootQ]){
-        parent[rootP] = rootQ;
-        sz[rootQ] += sz[rootP]; 
+    if (nodes[rootP].size < nodes[rootQ].size){
+        nodes[rootP].parent = nodes[rootQ].parent;
+        nodes[rootQ].size += nodes[rootP].size; 
     }
     else {
-        parent[rootQ] = rootP; 
-        sz[rootP] += sz[rootQ]; 
+        nodes[rootQ].parent = nodes[rootP].parent; 
+        nodes[rootP].size += nodes[rootQ].size; 
     }
-    --count_;
+    --m_count;
 }

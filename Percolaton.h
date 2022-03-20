@@ -5,13 +5,13 @@
 #include "WeightedQuickUnionUF.h"
 #include "gen_uf.h"
 
-class Percolation: private WeightedQuickUnionUF{
+class Percolation{
 private:
      //n^2 site
-    std::vector<int> grid;
+    std::vector<bool> grid;
 
     //size of grid, 5-by-5 grid has size 5
-    int sz_grid; 
+    std::size_t sz_grid; 
 
     const int m_open = 1;
 
@@ -23,7 +23,9 @@ private:
     //bottom virtual site
     int bottom;
 
-    int numberOfOpenSites_;
+    int m_numberOfOpenSites;
+
+    WeightedQuickUnionUF weightedQU;
 
 public:
     //create n-by-n grid, with all sites initially closed

@@ -6,23 +6,23 @@
 #include <iostream>
 
 Percolation::Percolation(int n): 
-    WeightedQuickUnionUF(n * n + 2)
+    weightedQU(n*n + 2)
 {
     sz_grid = n;
-    numberOfOpenSites_ = 0;
+    m_numberOfOpenSites = 0;
     grid.reserve(n * n);
-    for (int i = 0; i < n * n; i++){ //n^2 complexity
+    for (std::size_t i = 0; i < n * n; i++){ //n^2 complexity
         grid.push_back(closed); //initially all sites are closed
     }
 
     top = n * n; //top virtual site
     bottom = n * n + 1; //bottom virtual site
 
-    int bot_tmp_ix = n * (n - 1) + 0; //bottom edge starts from [n - 1][0]
+    std::size_t bot_tmp_ix = n * (n - 1) + 0; //bottom edge starts from [n - 1][0]
     
-    for (int i = 0; i < n; i++){
-        WeightedUnion(i, top); //connect top edge and top
-        WeightedUnion(bot_tmp_ix, bottom); //connect bottom edge and bottom
+    for (std::size_t i = 0; i < n; i++){
+        weightedQU.WeightedUnion(i, top); //connect top edge and top
+        weightedQU.WeightedUnion(bot_tmp_ix, bottom); //connect bottom edge and bottom
         bot_tmp_ix++;
     }
 } 
@@ -30,66 +30,65 @@ Percolation::Percolation(int n):
 void Percolation::open(int row, int col){
     //row:1 col:0 for size 5 = grid[5]
     // = size(row) + col = 5(1) + 0
-    int ix = sz_grid * row + col;
-    if (!isOpen(row, col)) grid[ix] = m_open;
-    ++numberOfOpenSites_;
+    if (isOpen(row, col)) return;
+    
+    std::size_t ix = sz_grid * row + col;
+    grid[ix] = m_open;
+    ++m_numberOfOpenSites;
 
     //connect to up, left, right, down sites if they are opened
     if ((row - 1) >= 0){ //up
         if(isOpen(row - 1, col)){
-            int up_ix = sz_grid * (row - 1) + col;
-            WeightedUnion(ix, up_ix);
+            std::size_t up_ix = sz_grid * (row - 1) + col;
+            weightedQU.WeightedUnion(ix, up_ix);
         }
     }
 
     if ((col - 1) >= 0){ //left
         if(isOpen(row, col - 1)){
-            int left_ix = sz_grid * row + (col - 1);
-            WeightedUnion(ix, left_ix);
+            std::size_t left_ix = sz_grid * row + (col - 1);
+            weightedQU.WeightedUnion(ix, left_ix);
         }
     }
 
     if ((col + 1) <= sz_grid - 1){ //right
         if(isOpen(row, col + 1)){
-            int right_ix = sz_grid * row + (col + 1);
-            WeightedUnion(ix, right_ix);
+            std::size_t right_ix = sz_grid * row + (col + 1);
+            weightedQU.WeightedUnion(ix, right_ix);
         }
     }
 
     if ((row + 1) <= sz_grid - 1){ //down
         if(isOpen(row + 1, col)){
-            int down_ix = sz_grid * (row + 1) + col;
-            WeightedUnion(ix, down_ix);
+            std::size_t down_ix = sz_grid * (row + 1) + col;
+            weightedQU.WeightedUnion(ix, down_ix);
         }
     }
 }
 
 bool Percolation::isOpen(int row, int col)const{
-    int ix = sz_grid * row + col;
-    if (grid[ix] == m_open) return true;
-    else return false;
+    std::size_t ix = sz_grid * row + col;
+    return grid[ix];
 }
 
 bool Percolation::isFull(int row, int col){
-    int ix = sz_grid * row + col;
-    return connected(ix, top);
+    std::size_t ix = sz_grid * row + col;
+    return weightedQU.connected(ix, top);
 }
 
 int Percolation::numberOfOpenSites()const{
-    return numberOfOpenSites_;
+    return m_numberOfOpenSites;
 }
 
 bool Percolation::percolates(){
-    return connected(top, bottom);
+    return weightedQU.connected(top, bottom);
 }
 
 double Percolation::testPercolateThreshold(){
     while (!percolates()){
-        int row = rand_uf(0, sz_grid - 1);
-        int col = rand_uf(0, sz_grid - 1); 
-        if (!isOpen(row, col)){
-            open(row, col);
-        }
+        std::size_t row = rand_uf(0, sz_grid - 1);
+        std::size_t col = rand_uf(0, sz_grid - 1); 
+        open(row, col);
     }
     double threshold =  numberOfOpenSites() / static_cast<double>(sz_grid * sz_grid);
     return threshold;

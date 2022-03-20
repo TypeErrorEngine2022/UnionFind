@@ -4,6 +4,7 @@
 #include "WeightedQuickUnionUF.h"
 #include "Percolaton.h"
 #include "gen_uf.h"
+#include "PercolationStat.h"
 
 using namespace std;
 
@@ -42,7 +43,10 @@ int main(){
         infile.close();
     }*/
 
-    Percolation pGrid(size);
-    pGrid.testPercolateThreshold();
+    cout << "Enter number of time of simulation:";
+    int time;
+    cin >> time;
+    PercolationStat pStat(size, time);
+    cout << "Mean: " << pStat.PercolationMean() << endl;
 }
 

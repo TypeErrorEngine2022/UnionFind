@@ -83,7 +83,7 @@ bool Percolation::percolates(){
     return this->connected(top, bottom);
 }
 
-void Percolation::testPercolateThreshold(){
+double Percolation::testPercolateThreshold(){
     while (!(this->percolates())){
         int row = rand_uf(0, sz_grid - 1);
         int col = rand_uf(0, sz_grid - 1); 
@@ -92,7 +92,7 @@ void Percolation::testPercolateThreshold(){
             this -> open(row, col);
         }
     }
-    std::cout << "Number of opensite is " << this -> numberOfOpenSites() << std::endl;
     double threshold = this -> numberOfOpenSites() / static_cast<double>(sz_grid * sz_grid);
-    std::cout << "Threshold is " << threshold << std::endl;
+    //std::cout << "Threshold is " << threshold << std::endl;
+    return threshold;
 }

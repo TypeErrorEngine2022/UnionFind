@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 #include <iostream>
 
@@ -44,5 +45,5 @@ public:
     bool percolates(); 
 
     //Monte Carlo Simulation
-    void testPercolateThreshold();
+    double testPercolateThreshold();
 };

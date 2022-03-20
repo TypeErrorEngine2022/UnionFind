@@ -25,12 +25,12 @@ int WeightedQuickUnionUF::root(int p){
 }
 
 bool WeightedQuickUnionUF::connected(int p, int q){
-    return this->root(p) == this->root(q);
+    return root(p) == root(q);
 }
 
 void WeightedQuickUnionUF::WeightedUnion(int p, int q){
-    int rootP = this->root(p);
-    int rootQ = this->root(q);
+    int rootP = root(p);
+    int rootQ = root(q);
 
     if (rootP == rootQ) return;
     if (sz[rootP] < sz[rootQ]){

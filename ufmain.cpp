@@ -47,6 +47,6 @@ int main(){
     int time;
     cin >> time;
     PercolationStat pStat(size, time);
-    cout << "Mean: " << pStat.PercolationMean() << "\n";
+    pStat.displayThresholdStat();
 }
 

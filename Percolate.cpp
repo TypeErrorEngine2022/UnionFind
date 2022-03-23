@@ -2,8 +2,6 @@
 #include "WeightedQuickUnionUF.h"
 #include "gen_uf.h"
 
-#include <vector>
-#include <iostream>
 
 Percolation::Percolation(int n): 
     weightedQU(n*n + 2)

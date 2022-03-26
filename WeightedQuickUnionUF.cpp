@@ -20,7 +20,7 @@ std::size_t WeightedQuickUnionUF::root(std::size_t p){
     return p;
 }
 
-std::size_t WeightedQuickUnionUF::recursiveRoot(std::size_t){
+std::size_t WeightedQuickUnionUF::recursiveRoot(std::size_t p){
     if (p == nodes[p].parent) return p;
 
     return recursiveRoot(nodes[nodes[p].parent]);

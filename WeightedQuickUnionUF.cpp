@@ -12,18 +12,31 @@ std::size_t WeightedQuickUnionUF::count()const{
     return m_count;
 }
 
-std::size_t WeightedQuickUnionUF::root(std::size_t p){
+std::size_t WeightedQuickUnionUF::root(std::size_t p){ 
     while (p != nodes[p].parent){ //chase parent pointer until it reaches root => parent = parent's root => parent = root
-        nodes[p].parent = nodes[nodes[p].parent].parent; //change root of p to its grandparent: path-compression
+        nodes[p].parent = nodes[nodes[p].parent].parent; //change root of p to its grandparent: halved the path
         p = nodes[p].parent; //go to grandparent
     }
     return p;
 }
 
 std::size_t WeightedQuickUnionUF::recursiveRoot(std::size_t p){
-    if (p == nodes[p].parent) return p;
+    if (p == nodes[p].parent) return p;  
 
-    return recursiveRoot(nodes[nodes[p].parent]);
+    return recursiveRoot(nodes[nodes[p].parent].parent);
+}
+
+std::size_t WeightedQuickUnionUF::pathSplitRoot(std::size_t p){
+    while (p != nodes[p].parent){
+        std::size_t currentParent = nodes[p].parent;
+        std::size_t grandParent = nodes[currentParent].parent;
+        std::size_t grandGrandParent = nodes[grandParent].parent;
+        nodes[currentParent].parent = grandGrandParent;
+        currentParent = grandParent;
+        p = currentParent;
+    }
+    
+    return p;
 }
 
 bool WeightedQuickUnionUF::connected(std::size_t p, std::size_t q){

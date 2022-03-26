@@ -23,4 +23,5 @@ public:
 private:
     std::size_t root(std::size_t p); //return root of p
     std::size_t recursiveRoot(std::size_t p);
+    std::size_t pathSplitRoot(std::size_t p);
 };

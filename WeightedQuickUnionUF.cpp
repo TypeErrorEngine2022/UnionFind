@@ -20,6 +20,12 @@ std::size_t WeightedQuickUnionUF::root(std::size_t p){
     return p;
 }
 
+std::size_t WeightedQuickUnionUF::recursiveRoot(std::size_t){
+    if (p == nodes[p].parent) return p;
+
+    return recursiveRoot(nodes[nodes[p].parent]);
+}
+
 bool WeightedQuickUnionUF::connected(std::size_t p, std::size_t q){
     return root(p) == root(q);
 }

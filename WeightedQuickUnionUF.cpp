@@ -13,6 +13,8 @@ std::size_t WeightedQuickUnionUF::count()const{
 }
 
 std::size_t WeightedQuickUnionUF::root(std::size_t p){ 
+    // Halving the path: makes every other node on the root path links to its grandparent
+    // i.e. skip the parent, each jump by 2
     while (p != nodes[p].parent){ //chase parent pointer until it reaches root => parent = parent's root => parent = root
         nodes[p].parent = nodes[nodes[p].parent].parent; //change root of p to its grandparent: halved the path
         p = nodes[p].parent; //go to grandparent
@@ -27,7 +29,7 @@ std::size_t WeightedQuickUnionUF::recursiveRoot(std::size_t p){
 }
 
 std::size_t WeightedQuickUnionUF::pathSplitRoot(std::size_t p){
-    while (p != nodes[p].parent){
+   /* while (p != nodes[p].parent){
         std::size_t currentParent = nodes[p].parent;
         std::size_t grandParent = nodes[currentParent].parent;
         std::size_t grandGrandParent = nodes[grandParent].parent;
@@ -36,16 +38,24 @@ std::size_t WeightedQuickUnionUF::pathSplitRoot(std::size_t p){
         p = currentParent;
     }
     
+    return p; */
+
+    //ANS
+    while (p != nodes[p].parent){
+        std::size_t nextP = nodes[p].parent;
+        nodes[p].parent = nodes[nodes[p].parent].parent; // links to grandparent
+        p = nextP;
+    }
     return p;
 }
 
 bool WeightedQuickUnionUF::connected(std::size_t p, std::size_t q){
-    return root(p) == root(q);
+    return pathSplitRoot(p) == pathSplitRoot(q);
 }
 
 void WeightedQuickUnionUF::WeightedUnion(std::size_t p, std::size_t q){
-    std::size_t rootP = root(p);
-    std::size_t rootQ = root(q);
+    std::size_t rootP = pathSplitRoot(p);
+    std::size_t rootQ = pathSplitRoot(q);
 
     if (rootP == rootQ) return;
     if (nodes[rootP].size < nodes[rootQ].size){

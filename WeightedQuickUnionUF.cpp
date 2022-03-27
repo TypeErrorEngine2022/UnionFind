@@ -29,18 +29,7 @@ std::size_t WeightedQuickUnionUF::recursiveRoot(std::size_t p){
 }
 
 std::size_t WeightedQuickUnionUF::pathSplitRoot(std::size_t p){
-   /* while (p != nodes[p].parent){
-        std::size_t currentParent = nodes[p].parent;
-        std::size_t grandParent = nodes[currentParent].parent;
-        std::size_t grandGrandParent = nodes[grandParent].parent;
-        nodes[currentParent].parent = grandGrandParent;
-        currentParent = grandParent;
-        p = currentParent;
-    }
-    
-    return p; */
-
-    //ANS
+    // Path Spliting: link every node on the root path to its grandparent
     while (p != nodes[p].parent){
         std::size_t nextP = nodes[p].parent;
         nodes[p].parent = nodes[nodes[p].parent].parent; // links to grandparent

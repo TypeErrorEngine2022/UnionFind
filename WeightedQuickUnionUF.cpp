@@ -4,7 +4,7 @@ WeightedQuickUnionUF::WeightedQuickUnionUF(std::size_t n){
     m_count = n;
     nodes.reserve(n);
     for (std::size_t i = 0; i < n; i++){
-        nodes.push_back({i, 1});
+        nodes.push_back({i, 0});
     }
 }
 
@@ -47,13 +47,31 @@ void WeightedQuickUnionUF::WeightedUnion(std::size_t p, std::size_t q){
     std::size_t rootQ = pathSplitRoot(q);
 
     if (rootP == rootQ) return;
-    if (nodes[rootP].size < nodes[rootQ].size){
+
+    //Compare by number of element
+    /*if (nodes[rootP].size < nodes[rootQ].size){
         nodes[rootP].parent = nodes[rootQ].parent;
         nodes[rootQ].size += nodes[rootP].size; 
     }
     else {
         nodes[rootQ].parent = nodes[rootP].parent; 
         nodes[rootP].size += nodes[rootQ].size; 
+    }*/
+
+    //Compare by height of the tree / rank
+    if (nodes[rootP].size < nodes[rootQ].size){ 
+        nodes[rootP].parent = nodes[rootQ].parent;
+        nodes[rootP].size = nodes[rootQ].size; //smaller tree's height is replaced by higher tree's
     }
+    else if (nodes[rootP].size > nodes[rootQ].size){
+        nodes[rootQ].parent = nodes[rootP].parent; 
+        nodes[rootQ].size = nodes[rootP].size; 
+    }
+    else {
+        nodes[rootQ].parent = nodes[rootP].parent;
+        nodes[rootP].size++; // when same height, link one to another increase the height of latter by one
+        nodes[rootQ].size = nodes[rootP].size;
+    }
+
     --m_count;
 }

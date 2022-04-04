@@ -49,14 +49,19 @@ int main(){
     PercolationStat pStat(size, time);
     pStat.displayThresholdStat();*/
     
-    std::size_t size = 125;
+    std::size_t size = 25;
     std::chrono::duration<float> prev_duration = timeTrial(size);
+    printElement("Size", 6);
+    printElement("Time", 10);
+    printElement("Ratio", 10);
+    std::cout << "\n";
     for (std::size_t i = 0; i < 5 ; i++){
         size *= 2;
         std::chrono::duration<float> duration = timeTrial(size);
         printElement(size, 6);
-        printElement(duration.count(), 6);
-        printElement(duration / prev_duration, 6);
+        printElement(duration.count(), 10);
+        printElement(duration.count() / prev_duration.count() , 10);
+        std::cout << "\n";
         prev_duration = duration;
     }
 

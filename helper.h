@@ -16,3 +16,5 @@ std::chrono::duration<float> timeTrial(std::size_t size);
 
 template<typename T> 
 void printElement(T el, const int& width);
+
+#include "print.tpp"

@@ -20,7 +20,7 @@ void write_uf(std::ofstream& f1, int total){
 }
 
 std::chrono::duration<float> timeTrial(std::size_t size){
-    std::size_t time = 500;
+    std::size_t time = 200;
     auto start  = std::chrono::high_resolution_clock::now();
     PercolationStat pStat(size, time);
     auto end = std::chrono::high_resolution_clock::now();
@@ -28,9 +28,4 @@ std::chrono::duration<float> timeTrial(std::size_t size){
     return duration;
 }
 
-template<typename T>
-void printElement(T el, const int& width){
-    const char separator = ' ';
-    std::cout << std::left << std::setw(width) << std::setfill(separator) << el;
-}
 

@@ -3,15 +3,15 @@
 #include "Quickfind.h"
 #include "WeightedQuickUnionUF.h"
 #include "Percolaton.h"
-#include "gen_uf.h"
+#include "helper.h"
 #include "PercolationStat.h"
 
 using namespace std;
 
 int main(){
-    int size;
+    /*int size;
     cout << "Enter the size(N) of percolation grid(N-by-N):";
-    cin >> size;
+    cin >> size;*/
 
     /*ofstream uftxt("largeuf.txt");
     write_uf(uftxt, size);
@@ -43,10 +43,22 @@ int main(){
         infile.close();
     }*/
 
-    cout << "Enter number of time of simulation:";
+    /*cout << "Enter number of time of simulation:";
     int time;
     cin >> time;
     PercolationStat pStat(size, time);
-    pStat.displayThresholdStat();
+    pStat.displayThresholdStat();*/
+    
+    std::size_t size = 125;
+    std::chrono::duration<float> prev_duration = timeTrial(size);
+    for (std::size_t i = 0; i < 5 ; i++){
+        size *= 2;
+        std::chrono::duration<float> duration = timeTrial(size);
+        printElement(size, 6);
+        printElement(duration.count(), 6);
+        printElement(duration / prev_duration, 6);
+        prev_duration = duration;
+    }
+
 }
 

@@ -1,9 +1,9 @@
 #pragma once
 #include "Percolaton.h"
+#include "helper.h"
 
 #include <cmath>
 #include <iostream>
-#include <iomanip>
 #include <limits>
 
 class PercolationStat{
@@ -31,8 +31,4 @@ public:
 
     //print mean, stddev and confidence interval in format
     void displayThresholdStat();
-
-private:
-    template<typename T>
-    void printElement(T el, const int& width);
 };

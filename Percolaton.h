@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "WeightedQuickUnionUF.h"
-#include "gen_uf.h"
+#include "helper.h"
 
 class Percolation{
 private:

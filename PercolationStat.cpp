@@ -1,7 +1,5 @@
 #include "PercolationStat.h"
 
-#include <iostream>
-#include <iomanip>
 
 PercolationStat::PercolationStat(std::size_t sz, std::size_t times): size(sz), trials(times)
 {
@@ -36,12 +34,6 @@ double PercolationStat::thresholdConfidenceHi(){
     return thresholdMean() + (1.96 * thresholdStddev()) / (sqrt(trials));
 }
 
-template<typename T>
-void PercolationStat::printElement(T el, const int& width)
-{
-    const char separator = ' ';
-    std::cout << std::left << std::setw(width) << std::setfill(separator) << el;
-}
 
 void PercolationStat::displayThresholdStat(){
     printElement("mean", 24);
